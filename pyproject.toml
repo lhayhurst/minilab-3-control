@@ -1,0 +1,11 @@
+[project]
+name = "minilab-3-control"
+version = "0.1.0"
+description = "Custom Ableton Live MIDI Remote Script for Arturia MiniLab 3"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "decompyle3",
+    "mido>=1.3.3",
+    "python-rtmidi>=1.5.8",
+]

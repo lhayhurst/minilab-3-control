@@ -1,0 +1,26 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build zip
+        run: |
+          zip -r iamkat_MiniLab_3.zip iamkat_MiniLab_3/ \
+            --exclude "iamkat_MiniLab_3/__pycache__/*" \
+            --exclude "iamkat_MiniLab_3/*.pyc"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: iamkat_MiniLab_3.zip
+          generate_release_notes: true
