@@ -18,13 +18,15 @@ def create_mappings(cs):
             record_button='record_button',
         ),
 
-        # Mixer — Prog/Delete button → arm selected track, Faders → volume/sends/pan
+        # Mixer — arm, faders for selected track, rotaries for track/master volumes
         'Mixer': dict(
             target_track_arm_button='delete_button',
             target_track_volume_control='volume_fader',
             target_track_send_a_control='send_a_fader',
             target_track_send_b_control='send_b_fader',
             target_track_pan_control='pan_fader',
+            volume_controls=tuple(f'rotary_{i}' for i in range(1, 8)),  # tracks 1-7
+            master_volume_control='rotary_8',
         ),
 
         # Undo button → cycle monitoring (In → Auto → Off)
@@ -36,6 +38,11 @@ def create_mappings(cs):
         'SceneNavigation': dict(
             scene_up_button='arp_button',
             scene_down_button='pad_button',
+        ),
+
+        # Bank B pads → clip launch on tracks 1-8 at selected scene row
+        'ClipLaunch': dict(
+            **{f'clip_launch_{i}_button': f'clip_launch_{i}_button' for i in range(1, 9)}
         ),
 
     }

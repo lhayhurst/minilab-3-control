@@ -23,8 +23,18 @@ class Elements(ElementsBase):
         self.add_button(42, 'Record_Button',    msg_type=MIDI_NOTE_TYPE, channel=9)
         self.add_button(43, 'Tap_Tempo_Button', msg_type=MIDI_NOTE_TYPE, channel=9)
 
-        # Faders (factory MIDI mode CCs)
+        # Faders (DAW mode CCs, ch0)
         self.add_element('Volume_Fader', EncoderElement, 14)
         self.add_element('Send_A_Fader', EncoderElement, 15)
         self.add_element('Send_B_Fader', EncoderElement, 30)
         self.add_element('Pan_Fader',    EncoderElement, 31)
+
+        # Rotaries 1-8 (absolute CC, ch0)
+        # CCs: 86, 87, 89, 90, 110, 111, 116, 117
+        for i, cc in enumerate((86, 87, 89, 90, 110, 111, 116, 117)):
+            self.add_element(f'Rotary_{i + 1}', EncoderElement, cc)
+
+        # Bank B pads — clip launch (notes 44-51, ch9)
+        for i, note in enumerate(range(44, 52)):
+            self.add_button(note, f'Clip_Launch_{i + 1}_Button',
+                            msg_type=MIDI_NOTE_TYPE, channel=9)

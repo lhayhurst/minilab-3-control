@@ -12,6 +12,7 @@ from ableton.v3.control_surface.capabilities import (
 
 from .elements import NUM_SCENES, NUM_TRACKS, Elements
 from .mappings import create_mappings
+from .clip_launch import ClipLaunchComponent
 from .monitoring import MonitoringComponent
 from .navigation import SceneNavigationComponent
 from .midi import (
@@ -53,6 +54,7 @@ class Specification(ControlSurfaceSpecification):
     hello_messages = (CONNECTION_MESSAGE,) + LED_COLORS
     goodbye_messages = (DISCONNECTION_MESSAGE,)
     component_map = {
+        'ClipLaunch': ClipLaunchComponent,
         'Monitoring': MonitoringComponent,
         'SceneNavigation': SceneNavigationComponent,
     }
