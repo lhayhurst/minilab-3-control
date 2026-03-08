@@ -38,6 +38,11 @@ def create_mappings(cs):
             scene_down_button='pad_button',
         ),
 
+        # Rotaries 1-7 → track volumes 1-7; rotary 8 → master volume
+        'VolumeControl': dict(
+            **{f'rotary_{i}': f'rotary_{i}' for i in range(1, 9)}
+        ),
+
         # Bank B pads → clip launch on tracks 1-8 at selected scene row
         'ClipLaunch': dict(
             **{f'clip_launch_{i}_button': f'clip_launch_{i}_button' for i in range(1, 9)}
