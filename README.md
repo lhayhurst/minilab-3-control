@@ -39,11 +39,22 @@ yellow = monitoring, red = stop, green = play, crimson = record, blue = tap temp
 2. Download the latest `iamkat_MiniLab_3.zip` from the [Releases](../../releases) page
 3. Unzip it — you'll get a folder called `iamkat_MiniLab_3`
 4. Move that folder into your Ableton Remote Scripts directory:
-   - **Mac:** `~/Music/Ableton/User Library/Remote Scripts/`
+   - **Mac:** `~/Music/Ableton/User Library/Remote Scripts/` or `/Applications/Ableton Live 12 Suite.app/Contents/App-Resources/MIDI Remote Scripts`
    - **Windows:** `C:\Users\[you]\Documents\Ableton\User Library\Remote Scripts\`
 5. Restart Ableton Live
 6. Open **Preferences → MIDI** and set Control Surface to `iamkat_MiniLab_3` — the Input port may auto-select to `Minilab3 MIDI`; if not, set it manually
 7. In the same MIDI preferences, find `Minilab3 MIDI` in the Input list and enable **Track** and **Remote**
+
+## Releasing a new version
+
+The zip file attached to GitHub Releases is built automatically when a version tag is pushed:
+
+```bash
+git tag v1.2.3
+git push origin v1.2.3
+```
+
+This triggers the release workflow, which builds `iamkat_MiniLab_3.zip` and creates a GitHub Release with auto-generated notes.
 
 ## License
 

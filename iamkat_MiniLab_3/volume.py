@@ -16,7 +16,8 @@ class VolumeComponent(Component):
 
     @staticmethod
     def _apply(param, value):
-        # EncoderControl sends relative deltas; accumulate onto current value
+        if abs(value) > 0.25:  # pickup artifact — physical position diverged from last known
+            return
         param.value = max(param.min, min(param.max, param.value + value))
 
     def _set_track_volume(self, track_idx, value):
