@@ -14,10 +14,13 @@ class VolumeComponent(Component):
     rotary_7 = EncoderControl()
     rotary_8 = EncoderControl()
 
-    @staticmethod
-    def _apply(param, value):
-        # EncoderControl normalizes absolute CC to 0.0-1.0; scale to param range
-        param.value = max(param.min, min(param.max, value * param.max))
+    def _apply(self, param, value):
+        log = self.canonical_parent.log_message
+        log(f'iamkat vol: value={value!r} type={type(value).__name__} '
+            f'param.min={param.min} param.max={param.max}')
+        scaled = max(param.min, min(param.max, value * param.max))
+        log(f'iamkat vol: scaled={scaled}')
+        param.value = scaled
 
     def _set_track_volume(self, track_idx, value):
         tracks = self.song.tracks
