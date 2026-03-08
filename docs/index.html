@@ -16,7 +16,6 @@
       --border: rgba(255,255,255,0.08);
       --text: #f0f0f0;
       --muted: #888;
-      --accent: #fff;
       --teal: #00a0a0;
       --orange: #c85000;
       --yellow: #c89600;
@@ -95,6 +94,22 @@
 
     h1 span { color: var(--muted); font-weight: 300; }
 
+    /* ── COLOR-CYCLING "iamkat" ── */
+    @keyframes led-cycle {
+      0%    { color: var(--teal);    text-shadow: 0 0 20px var(--teal),    0 0 40px var(--teal); }
+      14%   { color: var(--orange);  text-shadow: 0 0 20px var(--orange),  0 0 40px var(--orange); }
+      28%   { color: var(--yellow);  text-shadow: 0 0 20px var(--yellow),  0 0 40px var(--yellow); }
+      42%   { color: var(--red);     text-shadow: 0 0 20px var(--red),     0 0 40px var(--red); }
+      56%   { color: var(--green);   text-shadow: 0 0 20px var(--green),   0 0 40px var(--green); }
+      70%   { color: var(--crimson); text-shadow: 0 0 20px var(--crimson), 0 0 40px var(--crimson); }
+      84%   { color: var(--blue);    text-shadow: 0 0 20px var(--blue),    0 0 40px var(--blue); }
+      100%  { color: var(--teal);    text-shadow: 0 0 20px var(--teal),    0 0 40px var(--teal); }
+    }
+
+    .brand {
+      animation: led-cycle 7s ease-in-out infinite;
+    }
+
     .tagline {
       font-size: 1.1rem;
       color: var(--muted);
@@ -120,20 +135,10 @@
       font-weight: 600;
       text-decoration: none;
       transition: opacity 0.2s, transform 0.2s;
-      cursor: pointer;
     }
     .btn:hover { opacity: 0.85; transform: translateY(-1px); }
-
-    .btn-primary {
-      background: #fff;
-      color: #000;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.25);
-    }
+    .btn-primary  { background: #fff; color: #000; }
+    .btn-secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.25); }
 
     /* ── CONTENT ── */
     .content {
@@ -153,7 +158,6 @@
       line-height: 1.8;
     }
 
-    /* ── SECTION HEADERS ── */
     h2 {
       font-size: 1.75rem;
       font-weight: 700;
@@ -198,25 +202,43 @@
       margin-bottom: 4px;
     }
 
-    .control-action {
-      font-size: 0.95rem;
-      color: var(--text);
-    }
+    .control-action { font-size: 0.95rem; color: var(--text); }
 
     /* ── INSTALL ── */
     .install-section { margin-bottom: 80px; }
 
-    .steps {
+    /* platform tabs */
+    .os-tabs {
       display: flex;
-      flex-direction: column;
-      gap: 20px;
+      gap: 4px;
+      margin-bottom: 32px;
     }
 
-    .step {
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
+    .os-tab {
+      padding: 8px 20px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
     }
+
+    .os-tab.active {
+      background: var(--surface);
+      color: var(--text);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .os-panel { display: none; }
+    .os-panel.active { display: block; }
+
+    .steps { display: flex; flex-direction: column; gap: 20px; }
+
+    .step { display: flex; gap: 20px; align-items: flex-start; }
 
     .step-num {
       width: 36px;
@@ -235,7 +257,20 @@
 
     .step-body { padding-top: 6px; }
     .step-title { font-weight: 600; margin-bottom: 4px; }
-    .step-desc { color: var(--muted); font-size: 0.9rem; }
+    .step-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+
+    .path {
+      display: inline-block;
+      margin-top: 8px;
+      background: #1a1a1a;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.82rem;
+      color: #ccc;
+      word-break: break-all;
+    }
 
     code {
       background: #1a1a1a;
@@ -268,15 +303,11 @@
     <div class="hero-gradient"></div>
     <div class="hero-content">
       <p class="eyebrow">Ableton Live 12 · Remote Script</p>
-      <h1>iamkat <span>MiniLab 3</span></h1>
+      <h1><span class="brand">iamkat</span> <span>MiniLab 3</span></h1>
       <p class="tagline">A custom control surface script that puts the right Live controls exactly where your hands already are.</p>
       <div class="btn-row">
-        <a class="btn btn-primary" href="https://github.com/lhayhurst/minilab-3-control/releases/latest">
-          ↓ Download
-        </a>
-        <a class="btn btn-secondary" href="https://github.com/lhayhurst/minilab-3-control">
-          View on GitHub
-        </a>
+        <a class="btn btn-primary" href="https://github.com/lhayhurst/minilab-3-control/releases/latest">↓ Download</a>
+        <a class="btn btn-secondary" href="https://github.com/lhayhurst/minilab-3-control">View on GitHub</a>
       </div>
     </div>
   </section>
@@ -406,45 +437,88 @@
     <!-- INSTALL -->
     <section class="install-section">
       <h2>Installation</h2>
-      <div class="steps">
 
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <div class="step-title">Download the latest release</div>
-            <div class="step-desc">Grab <code>iamkat_MiniLab_3.zip</code> from the <a href="https://github.com/lhayhurst/minilab-3-control/releases/latest" style="color:#aaa">Releases page</a>.</div>
+      <div class="os-tabs">
+        <button class="os-tab active" onclick="switchOS('mac', this)">Mac</button>
+        <button class="os-tab" onclick="switchOS('win', this)">Windows</button>
+      </div>
+
+      <!-- MAC -->
+      <div id="panel-mac" class="os-panel active">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">Download the latest release</div>
+              <div class="step-desc">Grab <code>iamkat_MiniLab_3.zip</code> from the <a href="https://github.com/lhayhurst/minilab-3-control/releases/latest" style="color:#aaa">Releases page</a>.</div>
+            </div>
           </div>
-        </div>
-
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-body">
-            <div class="step-title">Unzip and move the folder</div>
-            <div class="step-desc">
-              Put the <code>iamkat_MiniLab_3</code> folder into your Ableton Remote Scripts directory:<br><br>
-              Mac: <code>~/Music/Ableton/User Library/Remote Scripts/</code><br>
-              Windows: <code>C:\Users\[you]\Documents\Ableton\User Library\Remote Scripts\</code>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">Unzip and move the folder</div>
+              <div class="step-desc">
+                Double-click the zip to unzip it, then move the <code>iamkat_MiniLab_3</code> folder to:
+                <div class="path">~/Music/Ableton/User Library/Remote Scripts/</div>
+                <br>Tip: press <code>⌘ Shift G</code> in Finder and paste the path above to jump straight there.
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">Select the script in Ableton</div>
+              <div class="step-desc">Restart Ableton Live, open <strong>Preferences → MIDI</strong>, and set Control Surface to <code>iamkat_MiniLab_3</code>.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-title">That's it</div>
+              <div class="step-desc">The buttons light up with color-coded LEDs when the controller connects. Works with the MiniLab 3 in its default factory MIDI mode — no extra configuration needed.</div>
             </div>
           </div>
         </div>
-
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-body">
-            <div class="step-title">Select the script in Ableton</div>
-            <div class="step-desc">Restart Ableton Live, then open <strong>Preferences → MIDI</strong> and set Control Surface to <code>iamkat_MiniLab_3</code>.</div>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step-num">4</div>
-          <div class="step-body">
-            <div class="step-title">That's it</div>
-            <div class="step-desc">The buttons will light up with color-coded LEDs when the controller connects. No additional configuration needed — works with the MiniLab 3 in its default factory MIDI mode.</div>
-          </div>
-        </div>
-
       </div>
+
+      <!-- WINDOWS -->
+      <div id="panel-win" class="os-panel">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">Download the latest release</div>
+              <div class="step-desc">Grab <code>iamkat_MiniLab_3.zip</code> from the <a href="https://github.com/lhayhurst/minilab-3-control/releases/latest" style="color:#aaa">Releases page</a>.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">Unzip and move the folder</div>
+              <div class="step-desc">
+                Right-click the zip → <strong>Extract All</strong>, then move the <code>iamkat_MiniLab_3</code> folder to:
+                <div class="path">C:\Users\[your username]\Documents\Ableton\User Library\Remote Scripts\</div>
+                <br>Tip: paste that path directly into the Windows Explorer address bar.
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">Select the script in Ableton</div>
+              <div class="step-desc">Restart Ableton Live, open <strong>Options → Preferences → MIDI</strong>, and set Control Surface to <code>iamkat_MiniLab_3</code>.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-title">That's it</div>
+              <div class="step-desc">The buttons light up with color-coded LEDs when the controller connects. Works with the MiniLab 3 in its default factory MIDI mode — no extra configuration needed.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </section>
 
   </div>
@@ -461,6 +535,15 @@
       MIT License
     </p>
   </footer>
+
+  <script>
+    function switchOS(os, btn) {
+      document.querySelectorAll('.os-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.os-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + os).classList.add('active');
+    }
+  </script>
 
 </body>
 </html>
