@@ -18,15 +18,13 @@ def create_mappings(cs):
             record_button='record_button',
         ),
 
-        # Mixer — arm, faders for selected track, rotaries for track/master volumes
+        # Mixer — arm, faders for selected track
         'Mixer': dict(
             target_track_arm_button='delete_button',
             target_track_volume_control='volume_fader',
             target_track_send_a_control='send_a_fader',
             target_track_send_b_control='send_b_fader',
             target_track_pan_control='pan_fader',
-            volume_controls=tuple(f'rotary_{i}' for i in range(1, 8)),  # tracks 1-7
-            master_volume_control='rotary_8',
         ),
 
         # Undo button → cycle monitoring (In → Auto → Off)
