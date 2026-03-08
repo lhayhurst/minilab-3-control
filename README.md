@@ -23,7 +23,7 @@ simpler way to move around tracks — turning the rotary encoder, rather than sh
 | Fader 4 | Selected track pan |
 | Rotaries 1–7 | Track volumes 1–7 |
 | Rotary 8 | Master volume |
-| Bank B pads 1–8 | Launch clip on tracks 1–8 at selected scene |
+| Bank B pads 1–8 | Launch clip on tracks 1–8 at selected scene (switch to Bank B with Shift + Pad) |
 
 Buttons light up with color-coded LEDs on connect (teal = navigation, orange = arm,
 yellow = monitoring, red = stop, green = play, crimson = record, blue = tap tempo).
