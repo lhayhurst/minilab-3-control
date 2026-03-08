@@ -15,15 +15,13 @@ from .mappings import create_mappings
 from .clip_launch import ClipLaunchComponent
 from .monitoring import MonitoringComponent
 from .navigation import SceneNavigationComponent
+from .volume import VolumeComponent
 from .midi import (
     CONNECTION_MESSAGE,
     DISCONNECTION_MESSAGE,
     LED_COLORS,
     SYSEX_START,
 )
-
-# Rotary CC → track index (0-6 = tracks 1-7, 7 = master)
-_ROTARY_CC_TO_IDX = {86: 0, 87: 1, 89: 2, 90: 3, 110: 4, 111: 5, 116: 6, 117: 7}
 
 
 def get_capabilities():
@@ -60,6 +58,7 @@ class Specification(ControlSurfaceSpecification):
         'ClipLaunch': ClipLaunchComponent,
         'Monitoring': MonitoringComponent,
         'SceneNavigation': SceneNavigationComponent,
+        'VolumeControl': VolumeComponent,
     }
 
 
@@ -71,30 +70,3 @@ class IamkatMiniLab3(ControlSurface):
     def _do_send_midi(self, midi_event_bytes):
         if midi_event_bytes[0] == SYSEX_START:
             super()._do_send_midi(midi_event_bytes)
-
-    def receive_midi(self, midi_bytes):
-        # Intercept CC-on-ch0 messages for the 8 rotaries and set volume directly
-        # from the absolute CC value (0-127), bypassing EncoderControl's delta
-        # tracking which caused pickup jumps and a false volume floor.
-        if len(midi_bytes) == 3:
-            status, cc, value = midi_bytes
-            if (status & 0xF0) == 0xB0 and (status & 0x0F) == 0:
-                idx = _ROTARY_CC_TO_IDX.get(cc)
-                if idx is not None:
-                    self._set_rotary_volume(idx, value)
-                    return
-        super().receive_midi(midi_bytes)
-
-    def _set_rotary_volume(self, idx, raw):
-        try:
-            normalized = raw / 127.0
-            if idx < 7:
-                tracks = self.song.tracks
-                if idx < len(tracks):
-                    param = tracks[idx].mixer_device.volume
-                    param.value = max(param.min, min(param.max, normalized * param.max))
-            else:
-                param = self.song.master_track.mixer_device.volume
-                param.value = max(param.min, min(param.max, normalized * param.max))
-        except Exception as e:
-            self._c_instance.log_message(f'iamkat rotary err: {e!r}')

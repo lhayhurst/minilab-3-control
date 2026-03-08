@@ -1,4 +1,4 @@
-from ableton.v3.control_surface import MIDI_NOTE_TYPE, ElementsBase
+from ableton.v3.control_surface import MIDI_NOTE_TYPE, ElementsBase, MapMode
 from ableton.v3.control_surface.elements import EncoderElement
 
 NUM_TRACKS = 8
@@ -29,6 +29,11 @@ class Elements(ElementsBase):
         self.add_element('Send_B_Fader', EncoderElement, 30)
         self.add_element('Pan_Fader',    EncoderElement, 31)
 
+        # Rotaries 1-8 (absolute CC, ch0)
+        # CCs: 86, 87, 89, 90, 110, 111, 116, 117
+        for i, cc in enumerate((86, 87, 89, 90, 110, 111, 116, 117)):
+            self.add_element(f'Rotary_{i + 1}', EncoderElement, cc,
+                             map_mode=MapMode.Absolute)
 
         # Bank B pads — clip launch (notes 44-51, ch9)
         for i, note in enumerate(range(44, 52)):
