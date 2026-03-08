@@ -16,7 +16,12 @@ class VolumeComponent(Component):
 
     @staticmethod
     def _apply(param, value):
-        # EncoderControl sends relative deltas; accumulate onto current value
+        # EncoderControl sends relative deltas; accumulate onto current value.
+        # Ignore large deltas — they are pickup artifacts caused by the physical
+        # rotary position jumping relative to the element's last-seen CC value.
+        # Normal smooth turning produces |delta| < 0.05; pickup jumps are 0.3+.
+        if abs(value) > 0.1:
+            return
         param.value = max(param.min, min(param.max, param.value + value))
 
     def _set_track_volume(self, track_idx, value):
