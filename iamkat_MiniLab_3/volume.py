@@ -1,5 +1,9 @@
+import logging
+
 from ableton.v3.control_surface import Component
 from ableton.v3.control_surface.controls import EncoderControl
+
+logger = logging.getLogger(__name__)
 
 
 class VolumeComponent(Component):
@@ -14,12 +18,12 @@ class VolumeComponent(Component):
     rotary_7 = EncoderControl()
     rotary_8 = EncoderControl()
 
-    def _apply(self, param, value):
-        log = self.canonical_parent.log_message
-        log(f'iamkat vol: value={value!r} type={type(value).__name__} '
-            f'param.min={param.min} param.max={param.max}')
+    @staticmethod
+    def _apply(param, value):
+        logger.warning('iamkat vol: value=%r type=%s min=%r max=%r',
+                       value, type(value).__name__, param.min, param.max)
         scaled = max(param.min, min(param.max, value * param.max))
-        log(f'iamkat vol: scaled={scaled}')
+        logger.warning('iamkat vol: scaled=%r', scaled)
         param.value = scaled
 
     def _set_track_volume(self, track_idx, value):
@@ -28,7 +32,10 @@ class VolumeComponent(Component):
             self._apply(tracks[track_idx].mixer_device.volume, value)
 
     def _set_master_volume(self, value):
-        self._apply(self.song.master_track.mixer_device.volume, value)
+        try:
+            self._apply(self.song.master_track.mixer_device.volume, value)
+        except Exception as e:
+            logger.warning('iamkat master vol error: %r', e)
 
     @rotary_1.value
     def rotary_1(self, value, _): self._set_track_volume(0, value)
