@@ -282,6 +282,21 @@
       color: #ccc;
     }
 
+    /* ── CALLOUT ── */
+    .callout {
+      margin-top: 32px;
+      padding: 18px 22px;
+      background: #0d0d0d;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-left: 3px solid rgba(255,255,255,0.3);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .callout strong { color: var(--text); }
+
     /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
@@ -536,6 +551,16 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="callout">
+        <strong>Controller mode note:</strong> This script requires the MiniLab 3 to be in its
+        default <strong>factory MIDI mode</strong> — no changes needed out of the box.
+        If your controller is in DAW mode (you can tell because the display shows
+        <strong>DAW</strong>), switch back by holding <strong>Shift</strong> and pressing
+        the <strong>Prog</strong> button until the display returns to the default preset.
+        DAW mode is reached by holding Shift and pressing Prog three times — useful to
+        know if you ever want to switch between modes.
       </div>
 
     </section>
