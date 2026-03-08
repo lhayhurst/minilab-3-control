@@ -15,7 +15,8 @@ from .mappings import create_mappings
 from .clip_launch import ClipLaunchComponent
 from .monitoring import MonitoringComponent
 from .navigation import SceneNavigationComponent
-from .volume import VolumeComponent
+from .solo import SoloComponent
+from .view_toggle import ViewToggleComponent
 from .midi import (
     CONNECTION_MESSAGE,
     DISCONNECTION_MESSAGE,
@@ -58,7 +59,8 @@ class Specification(ControlSurfaceSpecification):
         'ClipLaunch': ClipLaunchComponent,
         'Monitoring': MonitoringComponent,
         'SceneNavigation': SceneNavigationComponent,
-        'VolumeControl': VolumeComponent,
+        'Solo': SoloComponent,
+        'ViewToggle': ViewToggleComponent,
     }
 
 

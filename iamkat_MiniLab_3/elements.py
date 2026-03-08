@@ -9,8 +9,9 @@ class Elements(ElementsBase):
     def __init__(self, *a, **k):
         super().__init__(*a, **k)
 
-        # Main encoder (relative, sends CC 28)
+        # Main encoder (relative, sends CC 28); press sends CC 118
         self.add_encoder(28, 'Display_Encoder', map_mode=MapMode.LinearBinaryOffset)
+        self.add_button(118, 'Display_Encoder_Button')
 
         # Transport / function buttons — MIDI mode, ch9
         # Physical: Arp=36, Pad=37, Prog/Delete=38, Undo=39, Stop=40, Play=41, Record=42, Tap=43

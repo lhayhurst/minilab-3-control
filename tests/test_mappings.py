@@ -15,6 +15,7 @@ class TestMappingsStructure:
         assert "Mixer" in m
         assert "Monitoring" in m
         assert "SceneNavigation" in m
+        assert "ViewToggle" in m
 
     def test_view_control(self):
         m = mappings()
@@ -25,7 +26,10 @@ class TestMappingsStructure:
         t = m["Transport"]
         assert t["play_button"] == "play_button"
         assert t["stop_button"] == "stop_button"
-        assert t["tap_tempo_button"] == "tap_tempo_button"
+
+    def test_view_toggle(self):
+        m = mappings()
+        assert m["ViewToggle"]["view_toggle_button"] == "tap_tempo_button"
 
     def test_recording(self):
         m = mappings()

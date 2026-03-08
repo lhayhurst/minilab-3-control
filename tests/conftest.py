@@ -15,6 +15,7 @@ _cs = MagicMock()
 _cs.Component = object
 _cs.MIDI_NOTE_TYPE = 1
 
+sys.modules.setdefault("Live", MagicMock())
 sys.modules.setdefault("ableton", MagicMock())
 sys.modules.setdefault("ableton.v3", MagicMock())
 sys.modules.setdefault("ableton.v3.control_surface", _cs)

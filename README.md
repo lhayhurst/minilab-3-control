@@ -8,7 +8,8 @@ simpler way to move around tracks — turning the rotary encoder, rather than sh
 
 | Control | Action |
 |---|---|
-| Main encoder | Select previous / next track |
+| Main encoder (turn) | Select previous / next track |
+| Main encoder (press) | Solo / unsolo selected track |
 | Arp button | Select scene up |
 | Pad button | Select scene down |
 | Prog/Delete button | Arm / disarm selected track |
@@ -16,13 +17,12 @@ simpler way to move around tracks — turning the rotary encoder, rather than sh
 | Stop button | Stop transport |
 | Play button | Play / continue |
 | Record button | Record (arms track first if needed) |
-| Tap button | Tap tempo |
+| Tap button | Toggle Session / Arrangement view |
 | Fader 1 | Selected track volume |
 | Fader 2 | Selected track Send A |
 | Fader 3 | Selected track Send B |
 | Fader 4 | Selected track pan |
-| Rotaries 1–7 | Track volumes 1–7 |
-| Rotary 8 | Master volume |
+| Rotaries 1–8 | Unassigned (available for manual MIDI mapping) |
 | Bank B pads 1–8 | Launch clip on tracks 1–8 at selected scene (switch to Bank B with Shift + Pad) |
 
 Buttons light up with color-coded LEDs on connect (teal = navigation, orange = arm,

@@ -9,7 +9,11 @@ def create_mappings(cs):
         'Transport': dict(
             play_button='play_button',
             stop_button='stop_button',
-            tap_tempo_button='tap_tempo_button',
+        ),
+
+        # Tap button → toggle Session / Arrangement view
+        'ViewToggle': dict(
+            view_toggle_button='tap_tempo_button',
         ),
 
         # Record button uses View_Based_Recording so it does the right thing
@@ -32,15 +36,15 @@ def create_mappings(cs):
             monitor_button='undo_button',
         ),
 
+        # Encoder press → solo selected track
+        'Solo': dict(
+            solo_button='display_encoder_button',
+        ),
+
         # Arp → scene up, Pad → scene down
         'SceneNavigation': dict(
             scene_up_button='arp_button',
             scene_down_button='pad_button',
-        ),
-
-        # Rotaries 1-7 → track volumes 1-7; rotary 8 → master volume
-        'VolumeControl': dict(
-            **{f'rotary_{i}': f'rotary_{i}' for i in range(1, 9)}
         ),
 
         # Bank B pads → clip launch on tracks 1-8 at selected scene row
