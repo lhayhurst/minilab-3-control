@@ -94,20 +94,14 @@
 
     h1 span { color: var(--muted); font-weight: 300; }
 
-    /* ── COLOR-CYCLING "iamkat" ── */
-    @keyframes led-cycle {
-      0%    { color: var(--teal);    text-shadow: 0 0 20px var(--teal),    0 0 40px var(--teal); }
-      14%   { color: var(--orange);  text-shadow: 0 0 20px var(--orange),  0 0 40px var(--orange); }
-      28%   { color: var(--yellow);  text-shadow: 0 0 20px var(--yellow),  0 0 40px var(--yellow); }
-      42%   { color: var(--red);     text-shadow: 0 0 20px var(--red),     0 0 40px var(--red); }
-      56%   { color: var(--green);   text-shadow: 0 0 20px var(--green),   0 0 40px var(--green); }
-      70%   { color: var(--crimson); text-shadow: 0 0 20px var(--crimson), 0 0 40px var(--crimson); }
-      84%   { color: var(--blue);    text-shadow: 0 0 20px var(--blue),    0 0 40px var(--blue); }
-      100%  { color: var(--teal);    text-shadow: 0 0 20px var(--teal),    0 0 40px var(--teal); }
+    /* ── PASTEL PINK PULSE "iamkat" ── */
+    @keyframes pink-pulse {
+      0%, 100% { color: #ffb3d9; text-shadow: 0 0 20px #ffb3d9, 0 0 40px #ff80bf; }
+      50%       { color: #ff99cc; text-shadow: 0 0 28px #ff99cc, 0 0 55px #ff66b2; }
     }
 
     .brand {
-      animation: led-cycle 7s ease-in-out infinite;
+      animation: pink-pulse 2.5s ease-in-out infinite;
     }
 
     .tagline {
