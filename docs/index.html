@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iamkat MiniLab 3 — Ableton Remote Script</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #000;
+      --surface: #0d0d0d;
+      --border: rgba(255,255,255,0.08);
+      --text: #f0f0f0;
+      --muted: #888;
+      --accent: #fff;
+      --teal: #00a0a0;
+      --orange: #c85000;
+      --yellow: #c89600;
+      --red: #c80000;
+      --green: #00a000;
+      --crimson: #c8001e;
+      --blue: #0028c8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      overflow: hidden;
+      padding-bottom: 80px;
+    }
+
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      opacity: 0.75;
+    }
+
+    .hero-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.1) 0%,
+        rgba(0,0,0,0.2) 40%,
+        rgba(0,0,0,0.85) 75%,
+        #000 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      text-align: center;
+      max-width: 700px;
+      padding: 0 24px;
+    }
+
+    .eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+
+    h1 span { color: var(--muted); font-weight: 300; }
+
+    .tagline {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 500px;
+      margin: 0 auto 40px;
+      font-weight: 400;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+    .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    .btn-primary {
+      background: #fff;
+      color: #000;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    /* ── CONTENT ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    /* ── MOTIVATION ── */
+    .motivation {
+      border-left: 2px solid rgba(255,255,255,0.15);
+      padding: 8px 0 8px 28px;
+      margin-bottom: 80px;
+      font-size: 1.1rem;
+      color: #aaa;
+      font-style: italic;
+      line-height: 1.8;
+    }
+
+    /* ── SECTION HEADERS ── */
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+    }
+
+    /* ── CONTROLS GRID ── */
+    .controls-section { margin-bottom: 80px; }
+
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    .control-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .led {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 5px;
+      box-shadow: 0 0 6px currentColor;
+    }
+
+    .control-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .control-action {
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    /* ── INSTALL ── */
+    .install-section { margin-bottom: 80px; }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .step {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      color: var(--muted);
+    }
+
+    .step-body { padding-top: 6px; }
+    .step-title { font-weight: 600; margin-bottom: 4px; }
+    .step-desc { color: var(--muted); font-size: 0.9rem; }
+
+    code {
+      background: #1a1a1a;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.85em;
+      color: #ccc;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    footer a { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+    footer a:hover { color: #fff; }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <img class="hero-img" src="minilab3.jpg" alt="Arturia MiniLab 3" />
+    <div class="hero-gradient"></div>
+    <div class="hero-content">
+      <p class="eyebrow">Ableton Live 12 · Remote Script</p>
+      <h1>iamkat <span>MiniLab 3</span></h1>
+      <p class="tagline">A custom control surface script that puts the right Live controls exactly where your hands already are.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="https://github.com/lhayhurst/minilab-3-control/releases/latest">
+          ↓ Download
+        </a>
+        <a class="btn btn-secondary" href="https://github.com/lhayhurst/minilab-3-control">
+          View on GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="content">
+
+    <!-- MOTIVATION -->
+    <blockquote class="motivation">
+      "I wrote this for a musician I work with for whom the stock MiniLab 3 script didn't work:
+      they wanted a toggle to arm the track, a toggle to move between input monitoring states,
+      and a simpler way to move around tracks — turning the rotary encoder, rather than
+      shift-turning it."
+    </blockquote>
+
+    <!-- CONTROLS -->
+    <section class="controls-section">
+      <h2>Controls</h2>
+      <div class="controls-grid">
+
+        <div class="control-card">
+          <div class="led" style="color:#888; background:#888;"></div>
+          <div>
+            <div class="control-label">Main Encoder</div>
+            <div class="control-action">Select previous / next track</div>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <div class="led" style="color:#00a0a0; background:#00a0a0;"></div>
+          <div>
+            <div class="control-label">Arp Button</div>
+            <div class="control-action">Select scene up</div>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <div class="led" style="color:#00a0a0; background:#00a0a0;"></div>
+          <div>
+            <div class="control-label">Pad Button</div>
+            <div class="control-action">Select scene down</div>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <div class="led" style="color:#c85000; background:#c85000;"></div>
+          <div>
+            <div class="control-label">Prog / Delete</div>
+            <div class="control-action">Arm / disarm selected track</div>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <div class="led" style="color:#c89600; background:#c89600;"></div>
+          <div>
+            <div class="control-label">Undo Button</div>
+            <div class="control-action">Cycle input monitoring: In → Auto → Off</div>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <div class="led" style="color:#c80000; background:#c80000;"></div>
+          <div>
+            <div class="control-label">Stop Button</div>
+            <div class="control-action">Stop transport</div>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <div class="led" style="color:#00a000; background:#00a000;"></div>
+          <div>
+            <div class="control-label">Play Button</div>
+            <div class="control-action">Play / continue</div>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <div class="led" style="color:#c8001e; background:#c8001e;"></div>
+          <div>
+            <div class="control-label">Record Button</div>
+            <div class="control-action">Record — arms track first if needed</div>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <div class="led" style="color:#0028c8; background:#0028c8;"></div>
+          <div>
+            <div class="control-label">Tap Button</div>
+            <div class="control-action">Tap tempo</div>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <div class="led" style="color:#555; background:#555;"></div>
+          <div>
+            <div class="control-label">Fader 1</div>
+            <div class="control-action">Selected track volume</div>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <div class="led" style="color:#555; background:#555;"></div>
+          <div>
+            <div class="control-label">Fader 2</div>
+            <div class="control-action">Selected track Send A</div>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <div class="led" style="color:#555; background:#555;"></div>
+          <div>
+            <div class="control-label">Fader 3</div>
+            <div class="control-action">Selected track Send B</div>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <div class="led" style="color:#555; background:#555;"></div>
+          <div>
+            <div class="control-label">Fader 4</div>
+            <div class="control-action">Selected track pan</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- INSTALL -->
+    <section class="install-section">
+      <h2>Installation</h2>
+      <div class="steps">
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Download the latest release</div>
+            <div class="step-desc">Grab <code>iamkat_MiniLab_3.zip</code> from the <a href="https://github.com/lhayhurst/minilab-3-control/releases/latest" style="color:#aaa">Releases page</a>.</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Unzip and move the folder</div>
+            <div class="step-desc">
+              Put the <code>iamkat_MiniLab_3</code> folder into your Ableton Remote Scripts directory:<br><br>
+              Mac: <code>~/Music/Ableton/User Library/Remote Scripts/</code><br>
+              Windows: <code>C:\Users\[you]\Documents\Ableton\User Library\Remote Scripts\</code>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Select the script in Ableton</div>
+            <div class="step-desc">Restart Ableton Live, then open <strong>Preferences → MIDI</strong> and set Control Surface to <code>iamkat_MiniLab_3</code>.</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">That's it</div>
+            <div class="step-desc">The buttons will light up with color-coded LEDs when the controller connects. No additional configuration needed — works with the MiniLab 3 in its default factory MIDI mode.</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      Built for the <a href="https://www.arturia.com/products/hybrid-synths/minilab-3/overview" target="_blank" rel="noopener">Arturia MiniLab 3</a>
+      &nbsp;·&nbsp;
+      Requires Ableton Live 12
+      &nbsp;·&nbsp;
+      <a href="https://github.com/lhayhurst/minilab-3-control" target="_blank" rel="noopener">GitHub</a>
+      &nbsp;·&nbsp;
+      MIT License
+    </p>
+  </footer>
+
+</body>
+</html>
