@@ -14,15 +14,18 @@ class VolumeComponent(Component):
     rotary_7 = EncoderControl()
     rotary_8 = EncoderControl()
 
+    @staticmethod
+    def _apply(param, value):
+        # EncoderControl normalizes absolute CC to 0.0-1.0; scale to param range
+        param.value = max(param.min, min(param.max, value * param.max))
+
     def _set_track_volume(self, track_idx, value):
         tracks = self.song.tracks
         if track_idx < len(tracks):
-            param = tracks[track_idx].mixer_device.volume
-            param.value = value / 127.0 * param.max
+            self._apply(tracks[track_idx].mixer_device.volume, value)
 
     def _set_master_volume(self, value):
-        param = self.song.master_track.mixer_device.volume
-        param.value = value / 127.0 * param.max
+        self._apply(self.song.master_track.mixer_device.volume, value)
 
     @rotary_1.value
     def rotary_1(self, value, _): self._set_track_volume(0, value)
