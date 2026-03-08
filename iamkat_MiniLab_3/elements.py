@@ -32,7 +32,8 @@ class Elements(ElementsBase):
         # Rotaries 1-8 (absolute CC, ch0)
         # CCs: 86, 87, 89, 90, 110, 111, 116, 117
         for i, cc in enumerate((86, 87, 89, 90, 110, 111, 116, 117)):
-            self.add_element(f'Rotary_{i + 1}', EncoderElement, cc)
+            self.add_element(f'Rotary_{i + 1}', EncoderElement, cc,
+                             map_mode=MapMode.Absolute)
 
         # Bank B pads — clip launch (notes 44-51, ch9)
         for i, note in enumerate(range(44, 52)):
