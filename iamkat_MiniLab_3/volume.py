@@ -1,9 +1,5 @@
-import logging
-
 from ableton.v3.control_surface import Component
 from ableton.v3.control_surface.controls import EncoderControl
-
-logger = logging.getLogger(__name__)
 
 
 class VolumeComponent(Component):
@@ -20,11 +16,8 @@ class VolumeComponent(Component):
 
     @staticmethod
     def _apply(param, value):
-        logger.warning('iamkat vol: value=%r type=%s min=%r max=%r',
-                       value, type(value).__name__, param.min, param.max)
-        scaled = max(param.min, min(param.max, value * param.max))
-        logger.warning('iamkat vol: scaled=%r', scaled)
-        param.value = scaled
+        # EncoderControl sends relative deltas; accumulate onto current value
+        param.value = max(param.min, min(param.max, param.value + value))
 
     def _set_track_volume(self, track_idx, value):
         tracks = self.song.tracks
