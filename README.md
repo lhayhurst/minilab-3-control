@@ -39,6 +39,7 @@ yellow = monitoring, red = stop, green = play, crimson = record, blue = tap temp
    - **Windows:** `C:\Users\[you]\Documents\Ableton\User Library\Remote Scripts\`
 4. Restart Ableton Live
 5. Open **Preferences → MIDI** and set Control Surface to `iamkat_MiniLab_3`
+6. In the same MIDI preferences, find `Minilab3 MIDI` in the Input list and enable **Track** and **Remote**
 
 ## License
 
