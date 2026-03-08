@@ -27,19 +27,20 @@ yellow = monitoring, red = stop, green = play, crimson = record, blue = tap temp
 
 ## Requirements
 
-- Arturia MiniLab 3 in **factory MIDI mode** (the default — no configuration needed)
+- Arturia MiniLab 3 set to **DAW mode** (hold Shift + press 3rd Prog pad until display shows DAW)
 - Ableton Live 12
 
 ## Installation
 
-1. Download the latest `iamkat_MiniLab_3.zip` from the [Releases](../../releases) page
-2. Unzip it — you'll get a folder called `iamkat_MiniLab_3`
-3. Move that folder into your Ableton Remote Scripts directory:
+1. Set your MiniLab 3 to **DAW mode**: hold **Shift** and press the **3rd Prog pad** until the display shows **DAW**. The script will not work in the default Arturia mode.
+2. Download the latest `iamkat_MiniLab_3.zip` from the [Releases](../../releases) page
+3. Unzip it — you'll get a folder called `iamkat_MiniLab_3`
+4. Move that folder into your Ableton Remote Scripts directory:
    - **Mac:** `~/Music/Ableton/User Library/Remote Scripts/`
    - **Windows:** `C:\Users\[you]\Documents\Ableton\User Library\Remote Scripts\`
-4. Restart Ableton Live
-5. Open **Preferences → MIDI** and set Control Surface to `iamkat_MiniLab_3` — the Input port may auto-select to `Minilab3 MIDI`; if not, set it manually
-6. In the same MIDI preferences, find `Minilab3 MIDI` in the Input list and enable **Track** and **Remote**
+5. Restart Ableton Live
+6. Open **Preferences → MIDI** and set Control Surface to `iamkat_MiniLab_3` — the Input port may auto-select to `Minilab3 MIDI`; if not, set it manually
+7. In the same MIDI preferences, find `Minilab3 MIDI` in the Input list and enable **Track** and **Remote**
 
 ## License
 
